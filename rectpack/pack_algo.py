@@ -47,7 +47,7 @@ class PackingAlgorithm(object):
             return False
         else:
             return True
-    
+
     def __getitem__(self, key):
         """
         Return rectangle in selected position.
@@ -63,7 +63,7 @@ class PackingAlgorithm(object):
         """
         return sum(r.area() for r in self)
 
-    def fitness(self, width, height, rot = False):
+    def fitness(self, width, height, rot=False):
         """
         Metric used to rate how much space is wasted if a rectangle is placed.
         Returns a value greater or equal to zero, the smaller the value the more 
@@ -79,7 +79,7 @@ class PackingAlgorithm(object):
             None: Rectangle can't be placed
         """
         raise NotImplementedError
-        
+
     def add_rect(self, width, height, rid=None):
         """
         Add rectangle of widthxheight dimensions.
@@ -98,7 +98,7 @@ class PackingAlgorithm(object):
     def rect_list(self):
         """
         Returns a list with all rectangles placed into the surface.
-        
+
         Returns:
             List: Format [(x, y, width, height, rid), ...]
         """
@@ -119,7 +119,6 @@ class PackingAlgorithm(object):
             if not surface.contains(r):
                 raise Exception("Rectangle placed outside surface")
 
-        
         rectangles = [r for r in self]
         if len(rectangles) <= 1:
             return
@@ -135,6 +134,3 @@ class PackingAlgorithm(object):
 
     def reset(self):
         self.rectangles = []    # List of placed Rectangles.
-
-
-
