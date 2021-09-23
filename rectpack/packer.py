@@ -165,16 +165,12 @@ class PackerBBFConstraintCIMFn(object):
     first_item = operator.itemgetter(0)
 
     def add_rect(self, width, height, rid):
-        print('custom PackerBBFConstraintCIMFn')
+        # print('[debug] custom PackerBBFConstraintCIMFn')
         # Try packing into open bins
         if rid is None:
-            available_bins = self._open_bins
-            print('warning, rid is None')
-        else:
-            print("PackerBBFConstraintCIMFn with rid: ", rid)
-            available_bins = [b for b in self._open_bins]
-            for b in available_bins:
-                print(b)
+
+            print('[WARNING], rid is None')
+        available_bins = self._open_bins
         fit = ((b.fitness(width, height, rid, b.rect_list()),
                 b) for b in available_bins)
         fit = (b for b in fit if b[0] is not None)

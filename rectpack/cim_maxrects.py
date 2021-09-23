@@ -12,7 +12,7 @@ class CIMMaxRects(PackingAlgorithm):
 
     def __init__(self, width, height, rot=True, *args, **kwargs):
         super(CIMMaxRects, self).__init__(width, height, rot, *args, **kwargs)
-        print('Custom CIMMaxRects')
+        print('[debug] Custom CIMMaxRects algorithm')
 
     def _rect_fitness(self, max_rect, width, height):
         """
@@ -44,7 +44,7 @@ class CIMMaxRects(PackingAlgorithm):
             rect (Rectangle): Placed rectangle or None if was unable.
             max_rect (Rectangle): Maximal rectangle were rect was placed
         """
-        print('custom select position, rect_list: ', rect_list)
+        # print('[debug] custom select position, rect_list: ', rect_list)
         if not self._max_rects:
             return None, None
 
@@ -177,7 +177,6 @@ class CIMMaxRects(PackingAlgorithm):
         """
         assert(width > 0 and height > 0)
 
-        print(rect_list)
         # Search best position and orientation
         rect, _ = self._select_position(width, height, rid, rect_list)
         if not rect:
