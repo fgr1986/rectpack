@@ -1,5 +1,6 @@
-# from .maxrects import MaxRectsBssf as CIMMaxRectsBssf
-from .cim_maxrects import CIMMaxRectsBssf
+# from .maxrects import MaxRectsBssf as CIMNonOverlapingMaxRectsBssf
+from .cim_non_overlaping_maxrects import CIMNonOverlapingMaxRectsBssf
+from .cim_nn_parallel_maxrects import CIMNNParallelMaxRectsBssf
 
 import operator
 import itertools
@@ -232,7 +233,7 @@ class PackerOnline(object):
     Rectangles are packed as soon are they are added
     """
 
-    def __init__(self, pack_algo=CIMMaxRectsBssf, rotation=True):
+    def __init__(self, pack_algo=CIMNonOverlapingMaxRectsBssf, rotation=True):
         """
         Arguments:
             pack_algo (PackingAlgorithm): What packing algo to use
@@ -318,7 +319,7 @@ class PackerOnline(object):
         for abin in self:
             for rect in abin:
                 rectangles.append((bin_count, rect.x, rect.y,
-                                  rect.width, rect.height, rect.rid))
+                                   rect.width, rect.height, rect.rid))
             bin_count += 1
 
         return rectangles
@@ -351,7 +352,7 @@ class Packer(PackerOnline):
     Rectangles aren't packed untils pack() is called
     """
 
-    def __init__(self, pack_algo=CIMMaxRectsBssf, sort_algo=SORT_NONE,
+    def __init__(self, pack_algo=CIMNonOverlapingMaxRectsBssf, sort_algo=SORT_NONE,
                  rotation=True):
         """
         """
@@ -454,7 +455,7 @@ class PackerGlobal(Packer, PackerBNFMixin):
     """
     first_item = operator.itemgetter(0)
 
-    def __init__(self, pack_algo=CIMMaxRectsBssf, rotation=True):
+    def __init__(self, pack_algo=CIMNonOverlapingMaxRectsBssf, rotation=True):
         """
         """
         super(PackerGlobal, self).__init__(pack_algo=pack_algo,
@@ -580,7 +581,7 @@ PackingBin = Enum(["BNF", "BFF", "BBF", "Global", "BBFConstraintCIM"])
 
 def newPacker(mode=PackingMode.Offline,
               bin_algo=PackingBin.BBF,
-              pack_algo=CIMMaxRectsBssf,
+              pack_algo=CIMNonOverlapingMaxRectsBssf,
               sort_algo=SORT_AREA,
               rotation=True):
     """

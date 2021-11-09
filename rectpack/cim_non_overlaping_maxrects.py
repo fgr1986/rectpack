@@ -8,11 +8,12 @@ import operator
 first_item = operator.itemgetter(0)
 
 
-class CIMMaxRects(PackingAlgorithm):
+class CIMNonOverlapingMaxRects(PackingAlgorithm):
 
     def __init__(self, width, height, rot=True, *args, **kwargs):
-        super(CIMMaxRects, self).__init__(width, height, rot, *args, **kwargs)
-        print('[debug] Custom CIMMaxRects algorithm')
+        super(CIMNonOverlapingMaxRects, self).__init__(
+            width, height, rot, *args, **kwargs)
+        print('[debug] Custom CIMNonOverlapingMaxRects algorithm')
 
     def _rect_fitness(self, max_rect, width, height):
         """
@@ -94,12 +95,12 @@ class CIMMaxRects(PackingAlgorithm):
                 Rectangle(m.left, m.bottom, r.left-m.left, m.height))
         if r.right < m.right:
             new_rects.append(Rectangle(r.right, m.bottom,
-                             m.right-r.right, m.height))
+                                       m.right-r.right, m.height))
         if r.top < m.top:
             new_rects.append(Rectangle(m.left, r.top, m.width, m.top-r.top))
         if r.bottom > m.bottom:
             new_rects.append(Rectangle(m.left, m.bottom,
-                             m.width, r.bottom-m.bottom))
+                                       m.width, r.bottom-m.bottom))
 
         return new_rects
 
@@ -195,11 +196,11 @@ class CIMMaxRects(PackingAlgorithm):
         return rect
 
     def reset(self):
-        super(CIMMaxRects, self).reset()
+        super(CIMNonOverlapingMaxRects, self).reset()
         self._max_rects = [Rectangle(0, 0, self.width, self.height)]
 
 
-class CIMMaxRectsBl(CIMMaxRects):
+class CIMNonOverlapingMaxRectsBl(CIMNonOverlapingMaxRects):
 
     def _select_position(self, w, h):
         """
@@ -225,7 +226,7 @@ class CIMMaxRectsBl(CIMMaxRects):
         return Rectangle(m.x, m.y, w, h), m
 
 
-class CIMMaxRectsBssf(CIMMaxRects):
+class CIMNonOverlapingMaxRectsBssf(CIMNonOverlapingMaxRects):
     """Best Sort Side Fit minimize short leftover side"""
 
     def _rect_fitness(self, max_rect, width, height):
@@ -235,7 +236,7 @@ class CIMMaxRectsBssf(CIMMaxRects):
         return min(max_rect.width-width, max_rect.height-height)
 
 
-class CIMMaxRectsBaf(CIMMaxRects):
+class CIMNonOverlapingMaxRectsBaf(CIMNonOverlapingMaxRects):
     """Best Area Fit pick maximal rectangle with smallest area
     where the rectangle can be placed"""
 
@@ -246,7 +247,7 @@ class CIMMaxRectsBaf(CIMMaxRects):
         return (max_rect.width*max_rect.height)-(width*height)
 
 
-class CIMMaxRectsBlsf(CIMMaxRects):
+class CIMNonOverlapingMaxRectsBlsf(CIMNonOverlapingMaxRects):
     """Best Long Side Fit minimize long leftover side"""
 
     def _rect_fitness(self, max_rect, width, height):
